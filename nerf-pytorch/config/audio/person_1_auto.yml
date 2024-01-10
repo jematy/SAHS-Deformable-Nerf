@@ -1,0 +1,225 @@
+# Parameters to setup experiment.
+experiment:
+  # Unique experiment identifier
+  id: person_1_se_fixed_bg_512_paper_model_rightview_morelayer
+  # Experiment logs will be stored at "logdir"/"id"
+  logdir: /data/jkx/level/logs/audio/audio/person_1
+  #logdir: /data/wzm/projects/LevelSet_NeRFace/logs/dvp
+  # Seed for random number generators (for repeatability).
+  randomseed: 42  # Cause, why not?
+  # Number of training iterations.
+  train_iters: 500000
+  # Number of training iterations after which to validate.
+  validate_every: 1000
+  # Number of training iterations after which to checkpoints.
+  save_every: 5000
+  # Number of training iterations after which to print progress.
+  print_every: 100
+
+
+# Dataset parameters.
+dataset:
+  # Type of dataset (Blender vs LLFF vs DeepVoxels vs something else)
+  type: audio
+  # Base directory of dataset.
+  # basedir: /data/wzm/projects/LevelSet_NeRFace/nerf-pytorch/real_data/dave_dvp
+#  basedir: /root/autodl-tmp/real_data/dave_dvp
+  basedir: /data/jkx/person_1
+  #basedir: real_data/andrei_1_light
+  #basedir: real_data/debug
+  # Optionally, provide a path to the pre-cached dataset dir. This
+  # overrides the other dataset options.
+  #cachedir: cache/flame_sample
+  # For the Blender datasets (synthetic), optionally return images
+  # at half the original resolution of 800 x 800, to save space.
+  half_res: False
+  # Stride (include one per "testskip" images in the dataset).
+  testskip: 139
+  # Do not use NDC (normalized device coordinates). Usually True for
+  # synthetic (Blender) datasets.
+  no_ndc: True
+  # Near clip plane (clip all depth values closer than this threshold).
+  near: 0.5380014657974244
+  # Far clip plane (clip all depth values farther than this threshold).
+  far: 1.1380014657974242
+
+# Model parameters.
+models:
+  mask:
+    type: AudioFaceModel
+    use_mask: True
+  warp:
+    type: WarpFieldMLP
+    use_warp: True
+    num_layers: 6
+    hidden_size: 128
+    skip_connect_every: 4
+    num_encoding_fn_xyz: 10
+    include_input_xyz: True
+    log_sampling_xyz: True
+    include_driving: True
+  hyper:
+    slice_method: bendy_sheet
+    type: HyperSheetMLP
+    use_ambient: True
+    include_input_ambient: True
+    num_encoding_fn_ambient: 4
+    log_sampling_ambient: True
+    ambient_coord_dim: 2
+    num_layers: 6
+    hidden_size: 64
+    skip_connect_every: 4
+    num_encoding_fn_xyz: 10
+    include_input_xyz: True
+    log_sampling_xyz: True
+    include_driving: True
+
+  # Coarse model.
+  coarse:
+    # Name of the torch.nn.Module class that implements the model.
+    type: NeRFMLP
+    # Number of layers in the model.
+    num_layers: 8
+    # Number of hidden units in each layer of the MLP (multi-layer
+    # perceptron).
+    hidden_size: 256
+    # Add a skip connection once in a while. Note: This parameter
+    # won't take affect unless num_layers > skip_connect_every.
+    skip_connect_every: 4
+    # Whether to include the position (xyz) itself in its positional
+    # encoding.
+    include_input_xyz: True
+    # Whether or not to perform log sampling in the positional encoding
+    # of the coordinates.
+    log_sampling_xyz: True
+    # Number of encoding functions to use in the positional encoding
+    # of the coordinates.
+    num_encoding_fn_xyz: 10
+    # Additionally use viewing directions as input.
+    use_viewdirs: True
+    # Whether to include the direction itself in its positional encoding.
+    include_input_dir: True
+    # Number of encoding functions to use in the positional encoding
+    # of the direction.
+    num_encoding_fn_dir: 4
+    # Whether or not to perform log sampling in the positional encoding
+    # of the direction.
+    log_sampling_dir: True
+    include_driving: False
+    use_spatial_embeddings: True
+    use_pose: True
+    include_pose: False
+
+  # Fine model.
+  fine:
+    # Name of the torch.nn.Module class that implements the model.
+    type: NeRFMLP
+    # Number of layers in the model.
+    num_layers: 8
+    # Number of hidden units in each layer of the MLP (multi-layer
+    # perceptron).
+    hidden_size: 256
+    # Add a skip connection once in a while. Note: This parameter
+    # won't take affect unless num_layers > skip_connect_every.
+    skip_connect_every: 4
+    # Whether to include the position (xyz) itself in its positional
+    # encoding.
+    include_input_xyz: True
+    # Whether or not to perform log sampling in the positional encoding
+    # of the coordinates.
+    log_sampling_xyz: True
+    # Number of encoding functions to use in the positional encoding
+    # of the coordinates.
+    num_encoding_fn_xyz: 10
+    # Additionally use viewing directions as input.
+    use_viewdirs: True
+    # Whether to include the direction itself in its positional encoding.
+    include_input_dir: True
+    # Number of encoding functions to use in the positional encoding
+    # of the direction.
+    num_encoding_fn_dir: 4
+    # Whether or not to perform log sampling in the positional encoding
+    # of the direction.
+    log_sampling_dir: True
+    include_driving: False
+    use_spatial_embeddings: True
+    use_pose: True
+    include_pose: False
+
+# Optimizer params.
+optimizer:
+  # Name of the torch.optim class used for optimization.
+  type: Adam
+  # Learning rate.
+  lr: 5.0E-4
+
+# Learning rate schedule.
+scheduler:
+  # Exponentially decay learning rate (in 1000 steps)
+  lr_decay: 250
+  # Rate at which to apply this decay.
+  lr_decay_factor: 0.1
+
+# NeRF parameters.
+nerf:
+  # Use viewing directions as input, in addition to the X, Y, Z coordinates.
+  use_viewdirs: True
+  # Encoding function for position (X, Y, Z).
+  encode_position_fn: positional_encoding
+  # Encoding function for ray direction (theta, phi).
+  encode_direction_fn: positional_encoding
+  # Training-specific parameters.
+  train:
+    # Number of random rays to retain from each image.
+    # These sampled rays are used for training, and the others are discarded.
+    num_random_rays: 2048  # 32 * 32 * 4 # was 1024
+    # Size of each chunk (rays are batched into "chunks" and passed through
+    # Size of each chunk (rays are batched into "chunks" and passed through
+    # the network)
+    chunksize: 131072 #16384  #131072  # 131072  # 1024 * 32
+    # Whether or not to perturb the sampled depth values.
+    perturb: True
+    # Number of depth samples per ray for the coarse network.
+    num_coarse: 64
+    # Number of depth samples per ray for the fine network.
+    num_fine: 64
+    # Whether to render models using a white background.
+    white_background: False
+    # Standard deviation of noise to be added to the radiance field when
+    # performing volume rendering.
+    radiance_field_noise_std: 0.1
+    # Sample linearly in disparity space, as opposed to in depth space.
+    lindisp: False
+  # Validation-specific parameters.
+  validation:
+    # Number of random rays to retain from each image.
+    # These sampled rays are used for training, and the others are discarded.
+    chunksize: 131072 #4096  #131072   # 1024 * 32
+    # Whether or not to perturb the sampled depth values.
+    perturb: True
+    # Number of depth samples per ray for the coarse network.
+    num_coarse: 64
+    # Number of depth samples per ray for the fine network.
+    num_fine: 64
+    # Whether to render models using a white background.
+    white_background: False
+    # Standard deviation of noise to be added to the radiance field when
+    # performing volume rendering.
+    radiance_field_noise_std: 0.
+    # Sample linearly in disparity space, as opposed to in depth space.
+    lindisp: False
+texture_refine:
+  batch_size: 32
+  epochs: 80
+  epochs_decay: 80
+  lr_G: 0.0001
+  beta1: 0.0
+  beta2: 0.999
+  log_iters : 20
+  texture_photo: "/data/jkx/Audio_person_1/ori_imgs/46.jpg"
+  train_basedir: "/data/jkx/audio/Person_1/train/"
+  test_basedir: "/data/jkx/audio/Person_1/val/"
+  val_basedir: "/data/jkx/audio/Person_1/val/"
+  train_num: 6824  #need to add 1
+  test_num: 975
+  val_num: 975
