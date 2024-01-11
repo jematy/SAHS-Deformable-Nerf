@@ -213,7 +213,7 @@ texture_refine:
   texture_photo: "./audio_person_2/19.jpg"
   train_basedir: "./renders/person_2/8_layer_train/"
   test_basedir: "./renders/first_stage/"
-  val_basedir: "./renders/firsy_stage/"
+  val_basedir: "./renders/first_stage/"
   train_num: 1777  #need to add 1
   test_num: 254
   val_num: 254
