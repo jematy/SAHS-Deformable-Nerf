@@ -46,7 +46,6 @@ class DownBlock2d(nn.Module):
             nn.ReLU(inplace=False)
         )
         self.downsample = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=2, padding=1)
-        # 不确定下采样用stride
         self.residual = nn.Sequential(
             nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1),
             nn.BatchNorm2d(out_channels),
@@ -71,7 +70,6 @@ class UpBlock2d(nn.Module):
         )
         self.upsample = nn.ConvTranspose2d(out_channels, out_channels, kernel_size=3, stride=2, padding=1,
                                            output_padding=1)
-        # 不确定上采样用stride
         self.residual = nn.Sequential(
             nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1),
             nn.BatchNorm2d(out_channels),
@@ -121,12 +119,12 @@ class SPADELayer(nn.Module):
 
         self.mlp_shared = nn.Sequential(
             nn.Conv2d(label_nc, 128, kernel_size=3, padding=1),
-            nn.ReLU(inplace=False)  # 是否需要Relu不确定
+            nn.ReLU(inplace=False)
         )
 
         self.conv_gamma = nn.Conv2d(128, norm_nc, kernel_size=3, padding=1)
         self.conv_beta = nn.Conv2d(128, norm_nc, kernel_size=3, padding=1)
-        # 是否要spectral_norm
+
 
     def forward(self, x, F_id):
         normalized = self.param_free_norm(x)
@@ -243,7 +241,7 @@ class SPADEBlock(nn.Module):
         self.conv1_sn = spectral_norm(self.conv1)
         self.spade2 = SPADELayer(out_channels, fid_channels)
         self.lrelu2 = nn.LeakyReLU(0.2)
-        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1)#out_channels 可以解决layer4单layer3就挂了
+        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1)
         self.conv2_sn = spectral_norm(self.conv2)
 
         self.downsample = downsample
