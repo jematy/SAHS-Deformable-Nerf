@@ -1,9 +1,9 @@
 # Parameters to setup experiment.
 experiment:
   # Unique experiment identifier
-  id: person_2_se_fixed_bg_512_paper_model_rightview_morelayer_highsync_noaud
+  id: person_2_se_fixed_bg_512_paper_model_rightview_morelayer
   # Experiment logs will be stored at "logdir"/"id"
-  logdir: /data/jkx/level/logs/audio/person_2
+  logdir: /public/home/u42003/Desktop/25d_python/test_1207/nerf-pytorch/logs/audio/person_2
   #logdir: /data/wzm/projects/LevelSet_NeRFace/logs/dvp
   # Seed for random number generators (for repeatability).
   randomseed: 42  # Cause, why not?
@@ -24,7 +24,7 @@ dataset:
   # Base directory of dataset.
   # basedir: /data/wzm/projects/LevelSet_NeRFace/nerf-pytorch/real_data/dave_dvp
 #  basedir: /root/autodl-tmp/real_data/dave_dvp
-  basedir: /data/jkx/level/person_2
+  basedir: /public/home/u42003/Desktop/25d_python/test/data/audio/person_2
   #basedir: real_data/andrei_1_light
   #basedir: real_data/debug
   # Optionally, provide a path to the pre-cached dataset dir. This
@@ -216,10 +216,10 @@ texture_refine:
   beta1: 0.0
   beta2: 0.999
   log_iters : 20
-  texture_photo: "/data/jkx/level/person_2/com_imgs/19.jpg"
-  train_basedir: "/data/jkx/level/renders/person_2/4_layer_train/"
-  test_basedir: "/data/jkx/level/test/renders/person_2/4_layer/"
-  val_basedir: "/data/jkx/level/test/renders/person_2/4_layer/"
+  texture_photo: "./person_2/com_imgs/19.jpg"
+  train_basedir: "./renders/person_2/8_layer_train/"
+  test_basedir: "./renders/firsy_stage/"
+  val_basedir: "./renders/firsy_stage/"
   train_num: 1777  #need to add 1
   test_num: 254
   val_num: 254
