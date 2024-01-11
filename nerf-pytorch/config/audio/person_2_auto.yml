@@ -210,7 +210,7 @@ texture_refine:
   beta1: 0.0
   beta2: 0.999
   log_iters : 20
-  texture_photo: "./audio_person_2/19.jpg"
+  texture_photo: "./audio_person_2/com_imgs/19.jpg"
   train_basedir: "./renders/person_2/8_layer_train/"
   test_basedir: "./renders/first_stage/"
   val_basedir: "./renders/first_stage/"
