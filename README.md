@@ -39,8 +39,6 @@ Our model was trained on the  [Nerface](https://github.com/gafniguy/4D-Facial-Av
 
 ### NOTE
 
-Change the config which in nerf-pytorch/config
-
 ### Eval StageI
 
 ```
