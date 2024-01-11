@@ -12,4 +12,4 @@ This repository provides the official PyTorch implementation for the following p
 
 ## Acknowledgments
 
-Part of the code is borrowed from [Nerface](https://github.com/gafniguy/4D-Facial-Avatars)and [AD-NeRF](https://github.com/YudongGuo/AD-NeRF).
+Part of the code is borrowed from [Nerface](https://github.com/gafniguy/4D-Facial-Avatars) and [AD-NeRF](https://github.com/YudongGuo/AD-NeRF).
