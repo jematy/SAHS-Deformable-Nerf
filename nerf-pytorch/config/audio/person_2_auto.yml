@@ -3,7 +3,7 @@ experiment:
   # Unique experiment identifier
   id: person_2_se_fixed_bg_512_paper_model_rightview_morelayer
   # Experiment logs will be stored at "logdir"/"id"
-  logdir: /public/home/u42003/Desktop/25d_python/test_1207/nerf-pytorch/logs/audio/person_2
+  logdir: ./log
   #logdir: /data/wzm/projects/LevelSet_NeRFace/logs/dvp
   # Seed for random number generators (for repeatability).
   randomseed: 42  # Cause, why not?
@@ -22,14 +22,10 @@ dataset:
   # Type of dataset (Blender vs LLFF vs DeepVoxels vs something else)
   type: audio
   # Base directory of dataset.
-  # basedir: /data/wzm/projects/LevelSet_NeRFace/nerf-pytorch/real_data/dave_dvp
-#  basedir: /root/autodl-tmp/real_data/dave_dvp
-  basedir: /public/home/u42003/Desktop/25d_python/test/data/audio/person_2
-  #basedir: real_data/andrei_1_light
-  #basedir: real_data/debug
+  basedir: ./audio_person_2
   # Optionally, provide a path to the pre-cached dataset dir. This
   # overrides the other dataset options.
-  #cachedir: cache/flame_sample
+  # cachedir: cache/flame_sample
   # For the Blender datasets (synthetic), optionally return images
   # at half the original resolution of 800 x 800, to save space.
   half_res: False
@@ -210,15 +206,13 @@ nerf:
     lindisp: False
 texture_refine:
   batch_size: 32
-  epochs: 220
-  epochs_decay: 220
   lr_G: 0.0001
   beta1: 0.0
   beta2: 0.999
   log_iters : 20
   texture_photo: "./person_2/com_imgs/19.jpg"
   train_basedir: "./renders/person_2/8_layer_train/"
-  test_basedir: "./renders/firsy_stage/"
+  test_basedir: "./renders/first_stage/"
   val_basedir: "./renders/firsy_stage/"
   train_num: 1777  #need to add 1
   test_num: 254
