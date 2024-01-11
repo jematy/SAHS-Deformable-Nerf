@@ -4,7 +4,7 @@ This repository provides the official PyTorch implementation for the following p
 
 **Semantic-Aware Hyper-Space Deformable Neural Radiance Fields for Facial Avatar Reconstruction**
 
-![image-20240111121039177](README.assets\framework.png)
+![image-20240111121039177](README.assets/framework.png)
 
 ## Abstract
 
