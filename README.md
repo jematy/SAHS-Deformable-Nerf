@@ -37,7 +37,6 @@ Our model was trained on the  [Nerface](https://github.com/gafniguy/4D-Facial-Av
 
 ## Inference
 
-### NOTE
 
 ### Eval StageI
 
