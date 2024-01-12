@@ -42,7 +42,6 @@ Our model was trained on the  [Nerface](https://github.com/gafniguy/4D-Facial-Av
 
 ```
 python nerf-pytorch/eval_stage_rays.py --config nerf-pytorch/config/audio/person_2_auto.yml --checkpoint ./audio_person_2/checkpoint499999.ckpt --savedir ./renders/first_stage
-
 ```
 
 ### Eval StageII
