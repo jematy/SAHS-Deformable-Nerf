@@ -35,6 +35,12 @@ Our model was trained on the  [Nerface](https://github.com/gafniguy/4D-Facial-Av
 
 [Click here](https://drive.google.com/drive/folders/18qItNYgUXUUVrqsG6XY20O6GmZwLktGq?usp=sharing) to download the pre-trained models. Put these downloaded files into the project directory. 
 
+## Train
+
+```
+python nerf-pytorch/train_get_texture_photo.py --config config/audio/person_2_auto.yml
+```
+
 ## Inference
 
 
@@ -55,3 +61,4 @@ The final results will be saved to the directory`renders/second_stage`
 ## Acknowledgments
 
 Part of the code is borrowed from [Nerface](https://github.com/gafniguy/4D-Facial-Avatars) and [AD-NeRF](https://github.com/YudongGuo/AD-NeRF).
+
